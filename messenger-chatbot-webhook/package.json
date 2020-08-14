@@ -1,10 +1,10 @@
 {
-  "name": "messenger",
+  "name": "messenger-chatbot-webhook",
   "version": "1.0.0",
-  "description": "creating webhook for chatbot",
-  "main": "index.js",
+  "description": "creating messenger webhook for chatbot",
+  "main": "Server.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node Server.js"
   },
   "author": "Santhoshkumar S",
   "license": "ISC",
