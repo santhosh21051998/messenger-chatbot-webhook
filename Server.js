@@ -8,7 +8,7 @@ const
     let body = req.body;
   
     // Checks this is an event from a page subscription
-    if (body.object === 'page') {
+    if (body.object === "Magilvithu magil") {
   
       // Iterates over each entry - there may be multiple if batched
       body.entry.forEach(function(entry) {
