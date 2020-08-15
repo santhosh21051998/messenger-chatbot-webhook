@@ -28,6 +28,11 @@ const
   
   });
 
+ app.get('/', (req, res) => {
+  res.status(200).send("Welcome to webhook API");
+ })
+
+
   // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
 
