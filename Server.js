@@ -24,10 +24,10 @@ const
       // Returns a '200 OK' response to all requests
       res.status(200).send('EVENT_RECEIVED');
     //} 
-     else {
+     /*else {
       // Returns a '404 Not Found' if event is not from a page subscription
       res.sendStatus(404);
-    }
+    } */
   
   });
 
