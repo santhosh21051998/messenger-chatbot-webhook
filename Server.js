@@ -2,26 +2,47 @@ const
   express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
+const axios = require('axios');
+let VERIFY_TOKEN = "EAAGGtfVqzmMBAKx92TKM43pTGQdakYjlxdGCbzWZADWi6cMurmZCo8Uk2XiaVyDDoP1CyU1p2Q2720yApX32SwkhtlzWH5cLvsSCHTSYoVhIRVRc89RjZCpHzETWiWY5deBtPwEdt6tkG5gdZAnAle8lJ2JJtivfqzfzDN1ihLYxekFmyMHJ"
 
+function sendApi(VERIFY_TOKEN, reply)  {
+  console.log('sendApi initiated');
+  console.log(`sendApi::request: ${JSON.stringify(reply)}`)
+  axios.post(`https://graph.facebook.com/v8.0/me/messages?access_token=${VERIFY_TOKEN}`,reply).then((res)=>{
+    //console.log(`sendApi::response: ${JSON.stringify(res)}`);
+  }).catch((error)=>{
+    console.log(`sendApi:: ${error}`); 
+  })
+} 
   app.post('/webhook', (req, res) => {  
- 
     let body = req.body;
+    let reply = {
+                 "messaging_type": "<MESSAGING_TYPE>",
+                 "recipient" : {
+                  "id":"<PSID>"
+                 },
+                 "message":{
+                  "text":"Hey I am dev, how can I help you"
+                 }
+                };
     
-    console.log(`messenger request: ${JSON.stringify(req.body)}`)
+   // console.log(`messenger request: ${JSON.stringify(req.body)}`)
   
     // Checks this is an event from a page subscription
     if (body.object === "page") {
   
       // Iterates over each entry - there may be multiple if batched
       body.entry.forEach(function(entry) {
-  
         // Gets the message. entry.messaging is an array, but 
         // will only ever contain one message, so we get index 0
         let webhook_event = entry.messaging[0];
-        console.log(webhook_event);
+        reply.recipient.id = webhook_event.sender.id;
+        reply.messaging_type = "RESPONSE";
+        sendApi(VERIFY_TOKEN, reply);
+        //console.log(`webhook::request: ${JSON.stringify(webhook_event)}`);
       });
-  
       // Returns a '200 OK' response to all requests
+    
       res.status(200).send('EVENT_RECEIVED');
     } 
      else {
@@ -40,7 +61,6 @@ const
 app.get('/webhook', (req, res) => {
 
     // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "EAAGGtfVqzmMBAKx92TKM43pTGQdakYjlxdGCbzWZADWi6cMurmZCo8Uk2XiaVyDDoP1CyU1p2Q2720yApX32SwkhtlzWH5cLvsSCHTSYoVhIRVRc89RjZCpHzETWiWY5deBtPwEdt6tkG5gdZAnAle8lJ2JJtivfqzfzDN1ihLYxekFmyMHJ"
       
     // Parse the query params
     let mode = req.query['hub.mode'];
@@ -65,4 +85,4 @@ app.get('/webhook', (req, res) => {
   });
 
 
-app.listen(process.env.PORT, () => console.log('webhook is listening'));
+app.listen(process.env.PORT || 1000, () => console.log('webhook is listening'));
