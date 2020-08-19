@@ -22,7 +22,7 @@ function sendApi(VERIFY_TOKEN, reply)  {
                   "id":"<PSID>"
                  },
                  "message":{
-                  "text":"Hey I am dev, how can I help you"
+                  "text":"Hey I am Spider-Man, how can I help you"
                  }
                 };
     
