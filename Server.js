@@ -3,7 +3,7 @@ const
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
 const axios = require('axios');
-let VERIFY_TOKEN = "EAAGGtfVqzmMBAKx92TKM43pTGQdakYjlxdGCbzWZADWi6cMurmZCo8Uk2XiaVyDDoP1CyU1p2Q2720yApX32SwkhtlzWH5cLvsSCHTSYoVhIRVRc89RjZCpHzETWiWY5deBtPwEdt6tkG5gdZAnAle8lJ2JJtivfqzfzDN1ihLYxekFmyMHJ"
+let VERIFY_TOKEN = "";
 
 function sendApi(VERIFY_TOKEN, reply)  {
   console.log('sendApi initiated');
